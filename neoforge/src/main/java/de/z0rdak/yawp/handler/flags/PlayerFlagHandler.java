@@ -666,31 +666,31 @@ public final class PlayerFlagHandler {
         }
     }
 
-    @SubscribeEvent
-    public static void onEntityInteraction(PlayerInteractEvent.EntityInteractSpecific event) {
-        if (notServerSideOrPlayerNull(event.getEntity())) return;
-        Player player = event.getEntity();
-        FlagCheckRequest checkEvent = new FlagCheckRequest(event.getTarget().blockPosition(), USE_ENTITIES, getDimKey(player), player);
-        if (Services.FLAG_EVENT_DISPATCHER.post(checkEvent)) {
-            return;
-        }
-        FlagEvaluator.processCheck(checkEvent, onDeny -> {
-            event.setCanceled(true);
-            sendFlagMsg(onDeny);
-        });
-        if (!hasEmptyHand(player, event.getHand())) {
-
-            checkEvent = new FlagCheckRequest(event.getPos(), USE_ITEMS, getDimKey(player), player);
-            if (Services.FLAG_EVENT_DISPATCHER.post(checkEvent)) {
-                return;
-            }
-            FlagEvaluator.processCheck(checkEvent, onDeny -> {
-                event.setCanceled(true);
-                sendFlagMsg(onDeny);
-            });
-        }
-
-    }
+//    @SubscribeEvent
+//    public static void onEntityInteraction(PlayerInteractEvent.EntityInteractSpecific event) {
+//        if (notServerSideOrPlayerNull(event.getEntity())) return;
+//        Player player = event.getEntity();
+//        FlagCheckRequest checkEvent = new FlagCheckRequest(event.getTarget().blockPosition(), USE_ENTITIES, getDimKey(player), player);
+//        if (Services.FLAG_EVENT_DISPATCHER.post(checkEvent)) {
+//            return;
+//        }
+//        FlagEvaluator.processCheck(checkEvent, onDeny -> {
+//            event.setCanceled(true);
+//            sendFlagMsg(onDeny);
+//        });
+//        if (!hasEmptyHand(player, event.getHand())) {
+//
+//            checkEvent = new FlagCheckRequest(event.getPos(), USE_ITEMS, getDimKey(player), player);
+//            if (Services.FLAG_EVENT_DISPATCHER.post(checkEvent)) {
+//                return;
+//            }
+//            FlagEvaluator.processCheck(checkEvent, onDeny -> {
+//                event.setCanceled(true);
+//                sendFlagMsg(onDeny);
+//            });
+//        }
+//
+//    }
 
     private static boolean hasEmptyHands(Player player) {
         return player.getItemInHand(InteractionHand.MAIN_HAND).getItem().equals(Items.AIR) && player.getItemInHand(InteractionHand.OFF_HAND).getItem().equals(Items.AIR);

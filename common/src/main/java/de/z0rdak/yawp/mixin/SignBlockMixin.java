@@ -21,7 +21,7 @@ import static de.z0rdak.yawp.api.MessageSender.sendFlagMsg;
 @Mixin(SignBlock.class)
 public class SignBlockMixin {
 
-    @Inject(method = "useWithoutItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/SignBlock;openTextEdit(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/block/entity/SignBlockEntity;Z)V"), cancellable = true)
+    @Inject(method = "useWithoutItem", at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/block/SignBlock;openTextEdit(Lnet/minecraft/world/entity/player/Player;Lnet/minecraft/world/level/block/entity/SignBlockEntity;Lnet/minecraft/world/level/block/entity/SignTextSlot;)V"), cancellable = true)
     public void use(BlockState blockState, Level level, BlockPos blockPos, Player player, BlockHitResult blockHitResult, CallbackInfoReturnable<InteractionResult> cir) {
         if (!level.isClientSide()) {
             FlagCheckRequest checkEvent = new FlagCheckRequest(blockPos, NO_SIGN_EDIT, level.dimension(), player);

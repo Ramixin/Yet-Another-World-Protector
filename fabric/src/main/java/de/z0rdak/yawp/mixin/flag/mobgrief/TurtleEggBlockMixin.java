@@ -1,6 +1,7 @@
 package de.z0rdak.yawp.mixin.flag.mobgrief;
 
 import de.z0rdak.yawp.api.FlagEvaluator;
+import net.minecraft.core.BlockPos;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.LivingEntity;
@@ -15,7 +16,7 @@ import org.spongepowered.asm.mixin.injection.callback.CallbackInfoReturnable;
 @Mixin(TurtleEggBlock.class)
 public abstract class TurtleEggBlockMixin {
     @Inject(method = "canDestroyEgg", at = @At(value = "HEAD"), cancellable = true)
-    public void onBreaksEgg(ServerLevel world, Entity entity, CallbackInfoReturnable<Boolean> cir) {
+    public void onBreaksEgg(ServerLevel level, BlockPos pos, Entity entity, CallbackInfoReturnable<Boolean> cir) {
         if (entity instanceof Player || entity instanceof Bat || !(entity instanceof LivingEntity)) {
             return;
         }

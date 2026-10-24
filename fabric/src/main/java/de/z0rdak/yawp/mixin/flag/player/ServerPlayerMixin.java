@@ -2,12 +2,12 @@ package de.z0rdak.yawp.mixin.flag.player;
 
 import de.z0rdak.yawp.api.FlagEvaluator;
 import de.z0rdak.yawp.api.events.flag.FlagCheckRequest;
-import de.z0rdak.yawp.data.region.RegionDataManager;
 import de.z0rdak.yawp.core.flag.PortalTransferFlags;
+import de.z0rdak.yawp.data.region.RegionDataManager;
 import de.z0rdak.yawp.platform.Services;
-import de.z0rdak.yawp.platform.services.event.Events;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
+import net.minecraft.util.Prediction;
 import net.minecraft.world.entity.Entity;
 import net.minecraft.world.entity.Relative;
 import net.minecraft.world.entity.item.ItemEntity;
@@ -30,8 +30,8 @@ import static de.z0rdak.yawp.handler.HandlerUtil.isServerSide;
 public abstract class ServerPlayerMixin {
 
     // This is preferred to forge ItemTossEvent, because the forge event does delete the stack
-    @Inject(method = "drop(Lnet/minecraft/world/item/ItemStack;ZZ)Lnet/minecraft/world/entity/item/ItemEntity;", at = @At(value = "HEAD"), allow = 1, cancellable = true)
-    private void onDropItem(ItemStack stack, boolean b1, boolean b2, CallbackInfoReturnable<ItemEntity> cir) {
+    @Inject(method = "drop(Lnet/minecraft/world/item/ItemStack;ZLnet/minecraft/util/Prediction;)Lnet/minecraft/world/entity/item/ItemEntity;", at = @At(value = "HEAD"), allow = 1, cancellable = true)
+    private void onDropItem(ItemStack itemStack, boolean thrownFromHand, Prediction prediction, CallbackInfoReturnable<ItemEntity> cir) {
         ServerPlayer player = (ServerPlayer) (Object) this;
         if (isServerSide(player)) {
             FlagCheckRequest checkEvent = new FlagCheckRequest(player.blockPosition(), ITEM_DROP, getDimKey(player), player);
@@ -39,7 +39,7 @@ public abstract class ServerPlayerMixin {
                 return;
             FlagEvaluator.processCheck(checkEvent, deny -> {
                 sendFlagMsg(deny);
-                player.addItem(stack);
+                player.addItem(itemStack);
                 player.getInventory().setChanged();
                 cir.setReturnValue(null);
             });

@@ -19,10 +19,10 @@ public class NeoForgeConfigHelper implements IConfigHelper {
     public void setModContainer(ModContainer modContainer) {
         this.modContainer = modContainer;
     }
-    
+
     @Override
     public void registerServerConfig(ModConfigSpec spec, String configName) {
-        registerModConfig(spec, ModConfig.Type.SERVER, configName);
+        //registerModConfig(spec, ModConfig.Type.SERVER, configName);
     }
 
     @Override
@@ -32,7 +32,7 @@ public class NeoForgeConfigHelper implements IConfigHelper {
 
     @Override
     public void registerCommonConfig(ModConfigSpec spec, String configName) {
-        registerModConfig(spec, ModConfig.Type.COMMON, configName);
+        //registerModConfig(spec, ModConfig.Type, configName);
     }
     
     private void registerModConfig(ModConfigSpec spec, ModConfig.Type type, String configName) {

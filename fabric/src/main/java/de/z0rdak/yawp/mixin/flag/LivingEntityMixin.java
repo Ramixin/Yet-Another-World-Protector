@@ -166,7 +166,7 @@ public abstract class LivingEntityMixin {
      * as vanilla would do it when the gamerule doMobgrief is set to false
      */
     @Inject(method = "createWitherRose", locals = LocalCapture.CAPTURE_FAILSOFT,
-            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;setBlock(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;I)Z"), cancellable = true, allow = 1)
+            at = @At(value = "INVOKE", target = "Lnet/minecraft/world/level/Level;setBlockAndUpdate(Lnet/minecraft/core/BlockPos;Lnet/minecraft/world/level/block/state/BlockState;)Z"), cancellable = true, allow = 1)
     public void onCreateWitherRose(@Nullable LivingEntity adversary, CallbackInfo ci, ServerLevel level, boolean bl, BlockPos pos, BlockState blockState) {
         LivingEntity self = (LivingEntity) (Object) this;
         Level world = self.level();
